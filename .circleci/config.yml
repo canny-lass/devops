@@ -29,7 +29,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             sudo pip install --upgrade pip
-            pip install -r requirements.txt
+            pip3 install -r requirements.txt
       # - save_cache:
       #     key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       #     paths:
