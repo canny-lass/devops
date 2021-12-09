@@ -1,6 +1,9 @@
 version: 2.1 
+orbs: 
+  terraform: circleci/terraform@3.0.0
+
 jobs:
-  build:
+  build_and_test:
     docker:
       - image: circleci/python:3.9-buster-node-browsers-legacy
         auth:
@@ -9,10 +12,6 @@ jobs:
         environment:
           FLASK_CONFIG: testing
           TEST_DATABASE_URL: postgresql://ubuntu@localhost/circle_test?sslmode=disable
-    # docker:
-    #   - image: docker.mirror.hashicorp.services/hashicorp/terraform:light  
-
-
     steps:
       - checkout
       - run: mkdir test-reports
@@ -61,3 +60,45 @@ jobs:
           destination: tr1
       - store_test_results:
           path: test-reports/
+  deploy: 
+    executor: terraform/default
+    steps:
+      - checkout
+      - terraform/init:
+          path: .
+      - terraform/validate:
+          path: .
+      - terraform/fmt:
+          path: .
+      - terraform/plan:
+          path: .
+      - terraform/apply:
+          path: .
+      - terraform/destroy:
+          path: .
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_and_test
+  build_and_deploy:
+    jobs:
+      - build_and_test:
+          filters:
+            branches:
+              only: master
+      - deploy:
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build_and_test
+            - deploy
+          filters:
+            branches:
+              only: master
+
+
+  
