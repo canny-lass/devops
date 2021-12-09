@@ -76,13 +76,13 @@ jobs:
       - terraform/apply:
           path: .
   deploy: 
-    working_directory: ~/src
     docker:
       # replace with your preferred image
       - image: cimg/base:stable
 
     steps:
       - heroku/deploy-via-git:
+          force: true 
           api-key: e045de78-b3ad-49e6-9611-3fe6e857bcea 
           app-name: canny-lass-test-app
 
