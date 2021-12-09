@@ -1,6 +1,7 @@
 version: 2.1 
 orbs: 
   terraform: circleci/terraform@3.0.0
+  heroku: circleci/heroku@0.0.10 
 
 jobs:
   build_and_test:
@@ -60,7 +61,7 @@ jobs:
           destination: tr1
       - store_test_results:
           path: test-reports/
-  deploy: 
+  set_up_infra: 
     executor: terraform/default
     steps:
       - checkout
@@ -74,18 +75,37 @@ jobs:
           path: .
       - terraform/apply:
           path: .
+  deploy: 
+    working_directory: ~/src
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+
+    steps:
+      - heroku/deploy-via-git:
+          api-key: e045de78-b3ad-49e6-9611-3fe6e857bcea 
+          app-name: canny-lass-test-app
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build_and_test
+      # - build_and_test
+      - set_up_infra
+          # requires:
+          #   - build_and_test
+          # filters:
+          #   branches:
+          #     only: master
       - deploy:
           requires:
-            - build_and_test
-          filters:
-            branches:
-              only: master
+            - set_up_infra
+          # filters:
+          #   branches:
+          #     only: master
+          
+
+      
 
 
   

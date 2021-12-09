@@ -18,14 +18,14 @@ resource "heroku_app" "default" {
 }
 
 # Build code & release to the app
-resource "heroku_build" "default" {
-  app        = "canny-lass-test-app"
-  buildpacks = ["https://github.com/heroku/heroku-buildpack-python.git"]
+# resource "heroku_build" "default" {
+#   app        = "canny-lass-test-app"
+#   buildpacks = ["https://github.com/heroku/heroku-buildpack-python.git"]
 
-  source {
-    path = "./src"
-  }
-}
+#   source {
+#     path = "./src"
+#   }
+# }
 
 # # Launch the app's web process by scaling-up
 # resource "heroku_formation" "example" {
