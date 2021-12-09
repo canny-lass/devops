@@ -34,6 +34,7 @@ jobs:
       - run:
           name: Run pytests
           command: |
+            pip3 install pytest-cov pytest
             pytest --cov --cov-report=xml
       - run:
           name: Install Sonarqube scanner
