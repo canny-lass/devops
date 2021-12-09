@@ -34,6 +34,7 @@ jobs:
       - run:
           name: Run pytests
           command: |
+            . venv/bin/activate
             cd src
             pip3 install pytest-cov pytest
             pytest --cov --cov-report=xml
