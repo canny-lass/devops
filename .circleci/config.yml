@@ -47,7 +47,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             sudo pip3 install --upgrade pip
-            pip3 install -r requirements.txt
+            pip3 install -r src/requirements.txt
       # - save_cache:
       #     key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       #     paths:
@@ -55,7 +55,7 @@ jobs:
       - run:
           command: |
             . venv/bin/activate
-            python manage.py test
+            python manage.py src/test
       - store_artifacts:
           path: test-reports/
           destination: tr1
