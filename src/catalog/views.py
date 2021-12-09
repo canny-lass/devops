@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
+from django.views.decorators.http import require_GET, require_POST
 from .models import Item, Order, OrderItem, Address, Payment, Coupon
 from .forms import AddressForm, CouponForm
 
@@ -96,7 +97,7 @@ class CheckoutView(View):
             print('form invalid')
             return redirect('checkout')
 
-
+@require_POST
 def payment_complete(request):
     body = json.loads(request.body)
     order = Order.objects.get(
@@ -195,7 +196,7 @@ class CouponView(View):
         return redirect('checkout')
 
 
-
+@require_GET
 @login_required
 def add_to_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
@@ -225,7 +226,7 @@ def add_to_cart(request, slug):
         messages.success(request, f"{item} was added to your cart")
         return redirect('order_summary')
 
-
+@require_GET
 @login_required
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
@@ -247,7 +248,7 @@ def remove_from_cart(request, slug):
         messages.info(request, "You don't have an active order!")
         return redirect('order_summary')
 
-
+@require_GET
 @login_required
 def remove_single_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
