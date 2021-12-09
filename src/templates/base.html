@@ -46,7 +46,7 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
 <div class="container-fluid">
     <a class="navbar-brand waves-effect" href="{% url 'home' %}">
-      <img class="ml-0 pl-0" style="height: 60px;" src="{% static 'logo-black-1.svg' %}" alt="Logo">
+      <img class="ml-0 pl-0" style="height: 60px;" src="{% static 'logo-black.svg' %}" alt="Logo">
     </a>
     <h3 style="color:coral"><strong>Canny Lass Store</strong></h3>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -97,7 +97,7 @@
 <div class="container">
   {% if messages %}
     {% for message in messages %}
-      <div style="margin-top:5rem;" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      <div style="margin-top:7rem;" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
         {{message}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -106,9 +106,7 @@
     {% endfor %}
   {% endif %}
 </div>
-<div class="p-3 text-center">
-
-</div>
+<div class="p-3 text-center"></div>
 
 {% block content %}
 
