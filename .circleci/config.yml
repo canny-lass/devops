@@ -85,6 +85,7 @@ jobs:
           force: true 
           api-key: e045de78-b3ad-49e6-9611-3fe6e857bcea 
           app-name: canny-lass-test-app
+          branch: ibrahim-new-tests
 
 workflows:
   version: 2
