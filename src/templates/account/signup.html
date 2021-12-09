@@ -6,12 +6,13 @@
 
 {% block content %}
 
-<div class="p-5 text-center">
+<div class="p-2 text-center">
 
 </div>
-<div class="container">
-    <div class="row wow fadeIn">
-      <div class="h-100 row align-items-center">
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-3"></div>
+      <div class="col-6">
         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
           <div class="mb-4 mt-3">
             <h1>Sign Up</h1>
@@ -25,6 +26,7 @@
           <button type="submit">{% trans "Sign Up" %} &raquo;</button>
         </form>
         </div>
-      </div>
+      <div class="col-3"></div>
+    </div>
 </div>
 {% endblock %}
