@@ -19,11 +19,18 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
+    'django_nose',
     'storages',
     'catalog',
     'django_countries',
     'crispy_forms',
+]
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--cover-erase',
+    '--cover-package=ecom', # Change `MY_APP` to your `app` name
 ]
 
 SITE_ID = 1
