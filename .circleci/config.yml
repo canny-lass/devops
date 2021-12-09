@@ -24,19 +24,19 @@ jobs:
           command: |
             java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
           background: true
-      - run:
-          name: Install Sonarqube scanner
-          command: |
-            wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873.zip
-            unzip sonar-scanner-cli-4.2.0.1873.zip
-      - run:
-          name: Run Sonarscanner
-          command: |
-            export SONAR_SCANNER_OPTS="-Xmx2048m"
-            eval ./sonar-scanner-4.2.0.1873/bin/sonar-scanner -Dsonar.projectKey=CI-Test \
-            -Dsonar.sources=./src \
-            -Dsonar.host.url=http://3.213.147.167:9000 \
-            -Dsonar.login=d3787126d899de1798d1e0bbefeaf11d0ba0cd46
+      # - run:
+      #     name: Install Sonarqube scanner
+      #     command: |
+      #       wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873.zip
+      #       unzip sonar-scanner-cli-4.2.0.1873.zip
+      # - run:
+      #     name: Run Sonarscanner
+      #     command: |
+      #       export SONAR_SCANNER_OPTS="-Xmx2048m"
+      #       eval ./sonar-scanner-4.2.0.1873/bin/sonar-scanner -Dsonar.projectKey=CI-Test \
+      #       -Dsonar.sources=./src \
+      #       -Dsonar.host.url=http://3.213.147.167:9000 \
+      #       -Dsonar.login=d3787126d899de1798d1e0bbefeaf11d0ba0cd46
 
       # - restore_cache:
       #     key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
