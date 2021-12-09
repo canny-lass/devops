@@ -74,8 +74,6 @@ jobs:
           path: .
       - terraform/apply:
           path: .
-      - terraform/destroy:
-          path: .
 
 workflows:
   version: 2
