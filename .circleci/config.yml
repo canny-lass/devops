@@ -33,6 +33,7 @@ jobs:
             pip3 install -r src/requirements.txt
       - run:
           name: Run pytests
+          working_directory: ~/src
           command: |
             pip3 install pytest-cov pytest
             pytest --cov --cov-report=xml
