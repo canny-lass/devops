@@ -33,10 +33,11 @@ jobs:
             pip3 install -r src/requirements.txt
       - run:
           name: Run pytests
-          working_directory: ~/src
           command: |
+            cd src
             pip3 install pytest-cov pytest
             pytest --cov --cov-report=xml
+            cd ..
       - run:
           name: Install Sonarqube scanner
           command: |
@@ -44,6 +45,8 @@ jobs:
             unzip sonar-scanner-cli-4.2.0.1873.zip
       - run:
           name: Run Sonarscanner
+          steps:
+          - checkout
           command: |
             export SONAR_SCANNER_OPTS="-Xmx2048m"
             eval ./sonar-scanner-4.2.0.1873/bin/sonar-scanner -Dsonar.projectKey=CI-Test \
