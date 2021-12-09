@@ -35,7 +35,7 @@ jobs:
             export SONAR_SCANNER_OPTS="-Xmx2048m"
             eval ./sonar-scanner-4.2.0.1873/bin/sonar-scanner -Dsonar.projectKey=CI-Test \
             -Dsonar.sources=./src \
-            -Dsonar.host.url=http://3.222.189.127:9000 \
+            -Dsonar.host.url=http://3.213.147.167:9000 \
             -Dsonar.login=d3787126d899de1798d1e0bbefeaf11d0ba0cd46
 
       # - restore_cache:
