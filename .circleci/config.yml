@@ -1,8 +1,9 @@
 version: 2.1 
-orbs:
-  sonarscanner: psl/sonarscanner@0.0.4
+orbs: 
+  terraform: circleci/terraform@3.0.0
+
 jobs:
-  build:
+  build_and_test:
     docker:
       - image: circleci/python:3.9-buster-node-browsers-legacy
         auth:
@@ -23,9 +24,20 @@ jobs:
           command: |
             java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
           background: true
-      - sonarscanner/check-code-quality:
-          sonar_server_url: http://18.213.247.201:9000/ 
-          sonar_login: d3787126d899de1798d1e0bbefeaf11d0ba0cd46
+      - run:
+          name: Install Sonarqube scanner
+          command: |
+            wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873.zip
+            unzip sonar-scanner-cli-4.2.0.1873.zip
+      - run:
+          name: Run Sonarscanner
+          command: |
+            export SONAR_SCANNER_OPTS="-Xmx2048m"
+            eval ./sonar-scanner-4.2.0.1873/bin/sonar-scanner -Dsonar.projectKey=CI-Test \
+            -Dsonar.sources=./src \
+            -Dsonar.host.url=http://3.222.189.127:9000 \
+            -Dsonar.login=d3787126d899de1798d1e0bbefeaf11d0ba0cd46
+
       # - restore_cache:
       #     key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
@@ -34,7 +46,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             sudo pip3 install --upgrade pip
-            pip3 install -r requirements.txt
+            pip3 install -r src/requirements.txt
       # - save_cache:
       #     key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       #     paths:
@@ -42,9 +54,41 @@ jobs:
       - run:
           command: |
             . venv/bin/activate
-            python manage.py test
+            python src/manage.py test
       - store_artifacts:
           path: test-reports/
           destination: tr1
       - store_test_results:
           path: test-reports/
+  deploy: 
+    executor: terraform/default
+    steps:
+      - checkout
+      - terraform/init:
+          path: .
+      - terraform/validate:
+          path: .
+      - terraform/fmt:
+          path: .
+      - terraform/plan:
+          path: .
+      - terraform/apply:
+          path: .
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_and_test
+  build_and_deploy:
+    jobs:
+      - build_and_test
+      - deploy:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: master
+
+
+  
