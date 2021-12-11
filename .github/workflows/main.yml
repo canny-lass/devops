@@ -1,6 +1,4 @@
-on:
-  repository_dispatch:
-    types: [build]
+on: push
 
 jobs:
   zap_scan:
