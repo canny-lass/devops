@@ -90,7 +90,7 @@ jobs:
       - run:
           name: Run Baseline
           command: |
-            zap-baseline.py -t https://www.example.com
+            docker run -t owasp/zap2docker-stable zap-baseline.py -t https://www.example.com
 
 workflows:
   version: 2
