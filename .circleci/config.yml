@@ -104,7 +104,9 @@ workflows:
       #     filters:
       #       branches:
       #         only: master
-      - ozap_test
+      - ozap_test:
+          requires:
+            - build_and_test
 
 
   
