@@ -8,5 +8,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.6.1
         with:
-          target: 'https://www.zaproxy.org/'
+          target: 'https://canny-lass-test-app.herokuapp.com/'
   
