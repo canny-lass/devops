@@ -1,5 +1,6 @@
-name: Firebase Deploy
-on: [repository_dispatch]
+on:
+  repository_dispatch:
+    types: [build]
 
 jobs:
   zap_scan:
