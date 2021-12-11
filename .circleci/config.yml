@@ -87,11 +87,10 @@ jobs:
       - image: cimg/base:stable
     steps:
       - docker/pull:
-          images: owasp/zap2docker-bare 
+          images: owasp/zap2docker-bare
       - run:
           name: Run Baseline
           command: |
-            docker run -t owasp/zap2docker-stable zap-baseline.py -t https://www.example.com
 
 workflows:
   version: 2
