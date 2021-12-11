@@ -91,7 +91,7 @@ jobs:
       - run:
           name: Run Baseline
           command: |
-            zap-baseline.py -t https://www.example.com
+            python3 zap-baseline.py -t https://www.example.com
 
 workflows:
   version: 2
