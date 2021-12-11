@@ -83,15 +83,15 @@ jobs:
           path: .
   ozap_test: 
     docker:
-      # replace with your preferred image
-      - image: cimg/base:stable
+      - image: owasp/zap2docker-bare
+        auth:
+          username: ibaam15
+          password: $DOCKERHUB_PASSWORD
     steps:
-      - docker/install-docker
-          
       - run:
           name: Run Baseline
           command: |
-            docker pull owasp/zap2docker-bare
+            ls
 
 workflows:
   version: 2
