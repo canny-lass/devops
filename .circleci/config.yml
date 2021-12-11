@@ -91,6 +91,7 @@ jobs:
       - run:
           name: Run Baseline
           command: |
+            echo "hi"
 
 workflows:
   version: 2
