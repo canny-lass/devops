@@ -61,7 +61,7 @@ jobs:
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/canny-lass/devops/dispatches \
-            -d '{"event_type":"event_type"}'
+            -d '{"event_type":"event_type"}'. 
              
 
       # - restore_cache:
