@@ -57,11 +57,7 @@ jobs:
       - run:
           name: Scann
           command: |
-            curl \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/canny-lass/devops/dispatches \
-            -d '{"event_type":"event_type"}'. 
+            curl https://api.github.com/repos/canny-lass/devops/actions/workflows
              
 
       # - restore_cache:
