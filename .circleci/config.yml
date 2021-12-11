@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Scann
           command: |
-            curl https://api.github.com/repos/canny-lass/devops/actions/workflows
+            curl https://api.github.com/repos/canny-lass/devops/actions/workflows 
              
 
       # - restore_cache:
