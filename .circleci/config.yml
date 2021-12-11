@@ -86,12 +86,12 @@ jobs:
       # replace with your preferred image
       - image: cimg/base:stable
     steps:
-      - docker/pull:
-          images: owasp/zap2docker-bare
+      - docker/install-docker
+          
       - run:
           name: Run Baseline
           command: |
-            echo "hi"
+            docker pull owasp/zap2docker-bare
 
 workflows:
   version: 2
