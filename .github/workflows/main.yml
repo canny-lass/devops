@@ -1,0 +1,13 @@
+name: Firebase Deploy
+on: [repository_dispatch]
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan ZAP website
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.6.1
+        with:
+          target: 'https://www.zaproxy.org/'
+  
