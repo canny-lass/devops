@@ -76,7 +76,7 @@ jobs:
       #     destination: tr1
       # - store_test_results:
       #     path: test-reports/
-  deploy: 
+  deploy_prod: 
     executor: terraform/default
     steps:
       - checkout
@@ -88,15 +88,39 @@ jobs:
           path: .
       - terraform/plan:
           path: .
+          var: app-name=canny-lass-test-app
       - terraform/apply:
           path: .
+          var: app-name=canny-lass-test-app
+  deploy_dev: 
+      executor: terraform/default
+      steps:
+        - checkout
+        - terraform/init:
+            path: .
+        - terraform/validate:
+            path: .
+        - terraform/fmt:
+            path: .
+        - terraform/plan:
+            path: .
+            var: app-name=canny-lass-test-app-dev
+        - terraform/apply:
+            path: .
+            var: app-name=canny-lass-test-app-dev
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build_and_test
-      - deploy:
+      - deploy_dev:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: dev
+      - deploy_prod:
           requires:
             - build_and_test
           filters:
