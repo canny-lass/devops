@@ -81,51 +81,47 @@ jobs:
     steps:
       - checkout
       - terraform/init:
-          path: .
+          path: ./terraform/prod
       - terraform/validate:
-          path: .
+          path: ./terraform/prod
       - terraform/fmt:
-          path: .
+          path: ./terraform/prod
       - terraform/plan:
-          path: .
-          var: app-name=canny-lass-test-app
+          path: ./terraform/prod
       - terraform/apply:
-          path: .
-          var: app-name=canny-lass-test-app
+          path: ./terraform/prod
+          
   deploy_dev: 
       executor: terraform/default
       steps:
         - checkout
         - terraform/init:
-            path: .
+            path: ./terraform/dev
         - terraform/validate:
-            path: .
+            path: ./terraform/dev
         - terraform/fmt:
-            path: .
+            path: ./terraform/dev
         - terraform/plan:
-            path: .
-            var: app-name=canny-lass-test-app-dev
+            path: ./terraform/dev
         - terraform/apply:
-            path: .
-            var: app-name=canny-lass-test-app-dev
+            path: ./terraform/dev
+            
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build_and_test
+      # - build_and_test
       - deploy_dev:
-          requires:
-            - build_and_test
+          # requires:
+          #   - build_and_test
           filters:
             branches:
               only: dev
       - deploy_prod:
-          requires:
-            - build_and_test
+          # requires:
+          #   - build_and_test
           filters:
             branches:
               only: master
-
-
   
