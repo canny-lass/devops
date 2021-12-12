@@ -1,5 +1,4 @@
-name: Firebase Deploy
-on: [repository_dispatch]
+on: push
 
 jobs:
   zap_scan:
@@ -9,5 +8,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.6.1
         with:
-          target: 'https://www.zaproxy.org/'
+          target: 'https://canny-lass-test-app.herokuapp.com/'
   

@@ -7,19 +7,22 @@ terraform {
   }
 }
 
+variable "app-name" {
+  description = "Name of the Heroku app provisioned as an example"
+}
 provider "heroku" {
   email   = "ibrahimayodeji15@gmail.com"
   api_key = "e045de78-b3ad-49e6-9611-3fe6e857bcea"
 }
 
 resource "heroku_app" "default" {
-  name   = "canny-lass-test-app"
+  name   = var.app-name
   region = "us"
 }
 
 # Build code & release to the app
 resource "heroku_build" "default" {
-  app        = "canny-lass-test-app"
+  app        = var.app-name
   buildpacks = ["https://github.com/heroku/heroku-buildpack-python.git"]
 
   source {
