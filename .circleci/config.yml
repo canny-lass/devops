@@ -1,6 +1,7 @@
 version: 2.1 
 orbs: 
   terraform: circleci/terraform@3.0.0
+  docker: circleci/docker@2.0.1
 
 jobs:
   build_and_test:
@@ -8,7 +9,7 @@ jobs:
       - image: circleci/python:3.9-buster-node-browsers-legacy
         auth:
           username: ibaam15
-          password: $DOCKERHUB_PASSWORD 
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment:
           FLASK_CONFIG: testing
           TEST_DATABASE_URL: postgresql://ubuntu@localhost/circle_test?sslmode=disable
@@ -53,7 +54,15 @@ jobs:
             -Dsonar.host.url=http://3.213.147.167:9000 \
             -Dsonar.login=d3787126d899de1798d1e0bbefeaf11d0ba0cd46 \
             -Dsonar.python.coverage.reportPaths=./src/coverage.xml
-<<<<<<< Updated upstream
+      # - run:
+      #     name: Scann
+      #     command: |
+      #       curl -X POST \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       -H "Authorization: token ${GITHUB_TOKEN}" \
+      #       --data '{"event_type": "build", "client_payload": { "version": "1.2.3"}}' \
+      #       https://api.github.com/repos/canny-lass/devops/dispatches
+             
 
       # - restore_cache:
       #     key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
@@ -62,40 +71,57 @@ jobs:
       #     key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       #     paths:
       #       - "venv"
-      - store_artifacts:
-          path: test-reports/
-          destination: tr1
-      - store_test_results:
-          path: test-reports/
-  deploy: 
-=======
+      # - store_artifacts:
+      #     path: test-reports/
+      #     destination: tr1
+      # - store_test_results:
+      #     path: test-reports/
   deploy_prod: 
->>>>>>> Stashed changes
     executor: terraform/default
     steps:
       - checkout
       - terraform/init:
-          path: .
+          path: ./terraform/prod
       - terraform/validate:
-          path: .
+          path: ./terraform/prod
       - terraform/fmt:
-          path: .
+          path: ./terraform/prod
       - terraform/plan:
-          path: .
+          path: ./terraform/prod
       - terraform/apply:
-          path: .
+          path: ./terraform/prod
+          
+  deploy_dev: 
+      executor: terraform/default
+      steps:
+        - checkout
+        - terraform/init:
+            path: ./terraform/dev
+        - terraform/validate:
+            path: ./terraform/dev
+        - terraform/fmt:
+            path: ./terraform/dev
+        - terraform/plan:
+            path: ./terraform/dev
+        - terraform/apply:
+            path: ./terraform/dev
+            
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build_and_test
-      - deploy:
+      - deploy_dev:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: dev
+      - deploy_prod:
           requires:
             - build_and_test
           filters:
             branches:
               only: master
-
-
   
