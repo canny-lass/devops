@@ -13,3 +13,5 @@ Once the requirements are installed, run the following
 python .\manage.py migrate
 
 python .\manage.py runserver
+
+To deploy to the test environment push to the dev brabch, for the production push to master branch.
